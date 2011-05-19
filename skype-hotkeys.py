@@ -15,8 +15,9 @@ if command == '-m':
 elif command == '-c':
     import ConfigParser
     config = ConfigParser.ConfigParser()
-    from os.path import join, expanduser
-    config.read(join(expanduser('~'), 'bin', 'skype-hotkeys.cfg'))
+    from os.path import join, expanduser, dirname
+    hotkeys_dir = dirname(sys.argv[0])
+    config.read(join(hotkeys_dir, 'skype-hotkeys.cfg'))
     (number, code) = config.get('skype-hotkeys', ' '.join(args[1:])).split()
     res = skype.Invoke('CALL ' + number).split()
     call_id = res[1]
@@ -28,5 +29,5 @@ elif command == '-c':
         status = res[3]
     time.sleep(1)
     for c in code:
-        time.sleep(0.4)
+        time.sleep(0.3)
         skype.Invoke('SET CALL ' + call_id + ' DTMF ' + c)
