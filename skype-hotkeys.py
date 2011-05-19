@@ -12,6 +12,12 @@ if command == '-m':
     if skype.Invoke('GET MUTE') == "MUTE ON":
         command = "MUTE OFF"
     skype.Invoke(command)
+elif command == '-a':
+    call_id = skype.Invoke("SEARCH ACTIVECALLS").split()[1]
+    skype.Invoke('ALTER CALL ' + call_id + ' ANSWER')
+elif command == '-h':
+    call_id = skype.Invoke("SEARCH ACTIVECALLS").split()[1]
+    skype.Invoke('ALTER CALL ' + call_id + ' HANGUP')
 elif command == '-c':
     import ConfigParser
     config = ConfigParser.ConfigParser()
